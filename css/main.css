@@ -20,6 +20,13 @@ html, body {
 }
 
 #my_modal {
+  opacity: 0;
+  visibility: hidden;
+  right: -1000px;
+  transition: all 0.5s;
+}
+
+#my_modal.show {
   position: absolute;
   top: 0;
   right: 0;
@@ -27,16 +34,32 @@ html, body {
   z-index: 2;
   height: 100vh;
   width: 50vw;
+  opacity: 1;
+  visibility: visible;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6117647059);
+  z-index: 1;
 }
 
 .modal_body {
   height: 100%;
+  z-index: 2;
+  position: absolute;
+  right: 0;
 }
 
 .modal_title {
   text-align: center;
 }
 .modal_title h2 {
+  margin-top: 5px;
   color: #fff;
   font-size: 2.25rem;
   font-weight: 700;
@@ -46,10 +69,14 @@ html, body {
   position: absolute;
   top: 0;
   right: 0;
+  padding: 12px 20px;
   color: #fff;
   font-size: 1.8rem;
   font-weight: 600;
-  margin: 3px 10px;
+}
+.modal_close:hover {
+  cursor: pointer;
+  opacity: 0.7;
 }
 
 .modal_total {
@@ -72,7 +99,6 @@ html, body {
 }
 
 table {
-  width: 300px;
   height: 400px;
 }
 

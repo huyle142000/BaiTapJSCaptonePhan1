@@ -1,3 +1,33 @@
+// Xử lý modal
+var mymodal = document.getElementById('my_modal');
+
+//Show modal
+var storeCart = document.getElementById('store_cart');
+storeCart.addEventListener('click', function (e) {
+    mymodal.classList.add('show')
+})
+
+
+// closeModal
+var closeModal = document.querySelector('.modal_close');
+closeModal.addEventListener('click', function(e) {
+    mymodal.classList.remove('show')
+    
+})
+var overlay = document.querySelector('.overlay');
+
+overlay.addEventListener('click', function (e) {
+    closeModal.click();
+});
+
+
+
+
+
+
+
+
+//ProductAXIOS
 var productList = new ProductList();
 
 function getProductList() {
@@ -43,6 +73,8 @@ function showWeb(data) {
     });
     document.getElementById('store_list-products').innerHTML = content;
 }
+
+
 
 
 

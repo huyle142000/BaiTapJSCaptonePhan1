@@ -1,0 +1,139 @@
+#store {
+    background: linear-gradient(rgb(241, 50, 55), rgb(199, 128, 140));
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+#my_modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #000;
+    z-index: 2;
+    height: 100vh;
+    width: 50vw;
+}
+.modal_body{
+    height: 100%;
+}
+.modal_title {
+    text-align: center;
+    h2 {
+        @include styleText($color-white-3, $fs-6, $fw-3);
+    }
+}
+.modal_close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    @include styleText($color-white-3, $fs-3, $fw-2);
+    @include distanceTbLr(3px,10px)
+}
+.modal_total {
+    text-align: right;
+    h2 {
+        @include styleText($color-white-3, $fs-7, $fw-2);
+    }
+    button {
+        &:hover {
+            color: #fff;
+            opacity: 0.7;
+        }
+        @include styleText($color-white-3, $fs-7, $fw-2);
+        border: 1px solid $color-white-2;
+    }
+}
+table {
+    width: 300px;
+    height: 400px;
+}
+#store_cart {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    i {
+        &:hover {
+            cursor: pointer;
+            color: #fff;
+        }
+        @include styleText($color-dark-2, $fs-8, $fw-3);
+        @include distanceTbLr(10px, 10px);
+    }
+}
+.store_product {
+    background-color: #fff;
+}
+
+.store_product-icon {
+    i {
+        @include distanceTbLr(0, 10px);
+        @include styleText($color-red-1, $fs-3, $fw-2);
+    }
+    span {
+        @include distanceTbLr(0, 10px);
+        font-style: italic;
+        @include styleText($color-red-1, $fs-1, $fw-2);
+    }
+}
+.store_product-title {
+    i {
+        @include distanceTbLr(0, 10px);
+    }
+    span {
+        @include distanceTbLr(0, 10px);
+
+        @include styleText($color-dark-2, $fs-2, $fw-3);
+    }
+}
+.store_product-features {
+    @include distanceTbLr(0, 10px);
+
+    h2 {
+        @include styleText($color-dark-1, $fs-1, $fw-1);
+    }
+}
+.store_product-price {
+    align-items: center;
+    @include distanceTbLr(0, 10px);
+    span {
+        @include styleText($color-red-1, $fs-2, $fw-2);
+    }
+    button {
+        background-color: $color-red-2;
+        border: none;
+        margin-bottom: 2px;
+        color: #fff;
+        &:hover {
+            color: #fff;
+
+            background-color: $color-red-2;
+            opacity: 0.8;
+        }
+    }
+}
+body {
+    overflow: hidden;
+}
+.row {
+    height: 500px;
+    display: flex;
+    align-items: center;
+}
+.store_list-products {
+    height: 1000px;
+}
+.wrap-products {
+    transform: scale(1);
+    height: 300px;
+    overflow-y: hidden;
+    transition: all linear 0.5s;
+    transform-origin: top;
+    width: 50px;
+}
+.wrap-products:hover {
+    transform: scale(1.08);
+    transform-origin: top;
+    height: 500px;
+    width: 500px;
+}

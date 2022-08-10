@@ -1,0 +1,13 @@
+@mixin styleText($color, $fs, $fw) {
+    color: $color;
+    font-size: $fs;
+    font-weight: $fw;
+}
+
+@mixin distanceText($mt, $mr, $mb, $ml) {
+    margin: $mt $mr $mb $ml;
+}
+@mixin distanceTbLr($mt-b,$ml-r) {
+    margin: $mt-b $ml-r;
+}
+

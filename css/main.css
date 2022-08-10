@@ -1,0 +1,181 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  color: #656774;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+#store {
+  background: linear-gradient(rgb(241, 50, 55), rgb(199, 128, 140));
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+#my_modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #000;
+  z-index: 2;
+  height: 100vh;
+  width: 50vw;
+}
+
+.modal_body {
+  height: 100%;
+}
+
+.modal_title {
+  text-align: center;
+}
+.modal_title h2 {
+  color: #fff;
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+.modal_close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 3px 10px;
+}
+
+.modal_total {
+  text-align: right;
+}
+.modal_total h2 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+}
+.modal_total button {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  border: 1px solid #e2ebfc;
+}
+.modal_total button:hover {
+  color: #fff;
+  opacity: 0.7;
+}
+
+table {
+  width: 300px;
+  height: 400px;
+}
+
+#store_cart {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+}
+#store_cart i {
+  color: #121212;
+  font-size: 35px;
+  font-weight: 700;
+  margin: 10px 10px;
+}
+#store_cart i:hover {
+  cursor: pointer;
+  color: #fff;
+}
+
+.store_product {
+  background-color: #fff;
+}
+
+.store_product-icon i {
+  margin: 0 10px;
+  color: #d70018;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+.store_product-icon span {
+  margin: 0 10px;
+  font-style: italic;
+  color: #d70018;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.store_product-title i {
+  margin: 0 10px;
+}
+.store_product-title span {
+  margin: 0 10px;
+  color: #121212;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.store_product-features {
+  margin: 0 10px;
+}
+.store_product-features h2 {
+  color: #656774;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.store_product-price {
+  align-items: center;
+  margin: 0 10px;
+}
+.store_product-price span {
+  color: #d70018;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.store_product-price button {
+  background-color: #ea485b;
+  border: none;
+  margin-bottom: 2px;
+  color: #fff;
+}
+.store_product-price button:hover {
+  color: #fff;
+  background-color: #ea485b;
+  opacity: 0.8;
+}
+
+body {
+  overflow: hidden;
+}
+
+.row {
+  height: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.store_list-products {
+  height: 1000px;
+}
+
+.wrap-products {
+  transform: scale(1);
+  height: 300px;
+  overflow-y: hidden;
+  transition: all linear 0.5s;
+  transform-origin: top;
+  width: 50px;
+}
+
+.wrap-products:hover {
+  transform: scale(1.08);
+  transform-origin: top;
+  height: 500px;
+  width: 500px;
+}/*# sourceMappingURL=main.css.map */

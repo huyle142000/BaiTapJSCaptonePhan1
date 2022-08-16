@@ -48,7 +48,6 @@ function getProductList() {
             });
         }
 
-        getLocalstorages()
 
     }).catch(function (err) {
     });
@@ -295,7 +294,6 @@ function showCart(productListAdded) {
         numberOfCart += productListAdded[i].quantity
     }
     quantityOfCart.innerHTML = numberOfCart;
-    setLocalstorages();
 
     return tableProducts.innerHTML = divFilters + content;
 }

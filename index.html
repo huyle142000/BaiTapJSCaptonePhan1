@@ -23,38 +23,22 @@
     <link rel="stylesheet" href="./sass/main.scss">
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/main.css.map">
-    <style>
-        .col2-4 {
-            flex: 0 0 24%;
-            max-width: 24%;
-        }
-
-        ;
-
-        .col2-4 {
-            position: relative;
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-        }
-    </style>
 </head>
 
 <body>
     <div id="store_cart">
         <i id="store_cart-icon" class="fa-solid fa-cart-shopping"></i>
-
+        <span class="quantityOfCart">0</span>
     </div>
     <!-- modal -->
-    
+
     <div id="store">
-        <div class="container">
             <div class="row" id="store_list-products">
 
             </div>
-        </div>
     </div>
-    <div id="my_modal" >
+    <!-- modal -->
+    <div id="my_modal">
         <div class="overlay"></div>
         <div class="modal_body container">
             <div class="modal_title">
@@ -64,17 +48,26 @@
             <div class="modal_content">
                 <table>
                     <thead></thead>
-                    <tbody class="table_products"></tbody>
+                    <tbody class="table_products">
+                        <tr>
+                            <td style="font-size:50px ;">No Product Added</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
             <div class="modal_total">
-                <h2 id="result_total">Total:$0</h2>
-                <button class="btn" id="purchaseProduct">Purchase</button>
-                <button class="btn"id="resetProduct">Reset</button>
-
+                
             </div>
         </div>
     </div>
+    <!-- Over added popup -->
+    <div id="overAdded">
+        <div class="overlayAdded"></div>
+        <div class="overAdded_body container">
+            
+        </div>
+    </div>
+    
 
 
 
@@ -88,10 +81,12 @@
         crossorigin="anonymous"></script>
     <!--axios  -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- product -->
+    <script src="./js/models/product.js"></script>
     <!-- spPhone -->
-    <script src="./services/spPhone.js"></script>
+    <script src="./js/services/spPhone.js"></script>
     <!-- mainjs -->
-    <script src="./controllers/main.js"></script>
+    <script src="./js/controllers/main.js"></script>
 </body>
 
 </html>

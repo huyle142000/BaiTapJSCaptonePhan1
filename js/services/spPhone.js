@@ -5,4 +5,11 @@ function ProductList() {
             url: 'https://62e77bcf0e5d74566af56fcb.mockapi.io/JSCaption',
         });
     }
+    this.getProductToAdd = function (id) {
+        return axios({
+            method: 'get',
+            url: `https://62e77bcf0e5d74566af56fcb.mockapi.io/JSCaption/${id}`,
+        });
+    }
+   
 }

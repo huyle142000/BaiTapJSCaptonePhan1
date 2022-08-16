@@ -1,79 +1,187 @@
 #store {
     background: linear-gradient(rgb(241, 50, 55), rgb(199, 128, 140));
     height: 100vh;
+    width: 100vw;
     display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
     align-items: center;
     position: relative;
+    overflow: hidden;
 }
+
+//MODAL
 #my_modal {
-    opacity: 0;
     visibility: hidden;
-    right: -1000px;
-    transition: all 0.5s;
-}
-#my_modal.show {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
-    background-color: #000;
     z-index: 2;
-    height: 100vh;
-    width: 50vw;
+    left: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: all 0.5s;
+    .overlay {
+        transition: all 0.5s;
+
+        position: absolute;
+        top: 0;
+        right: -100%;
+        left: 0;
+        bottom: 0;
+        background-color: #0000009c;
+        z-index: 1;
+        backdrop-filter: blur(5px);
+    }
+    .modal_body {
+        transition: all 0.5s;
+        right: -100%;
+        background-color: #000;
+        height: 100%;
+        z-index: 2;
+        position: absolute;
+        width: 50vw;
+    }
+    .modal_title {
+        text-align: center;
+
+        h2 {
+            margin-top: 5px;
+            @include styleText($color-white-3, $fs-6, $fw-3);
+        }
+    }
+    .modal_close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 12px 20px;
+        @include styleText($color-white-3, $fs-3, $fw-2);
+
+        &:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+    }
+    .modal_total {
+        text-align: right;
+        h2 {
+            @include styleText($color-white-3, $fs-7, $fw-2);
+        }
+        button {
+            &:hover {
+                color: #fff;
+                opacity: 0.7;
+            }
+            @include styleText($color-white-3, $fs-7, $fw-2);
+            border: 1px solid $color-white-2;
+        }
+        #purchaseProduct {
+            border: none;
+
+            color: #fff;
+            background-color: green;
+        }
+        #resetProduct {
+            border: none;
+            color: #fff;
+            background-color: red;
+        }
+    }
+    //
+    table {
+        width: 100%;
+        height: 400px;
+        img {
+            height: 60px;
+        }
+        td {
+            @include styleText($color-white-3, $fs-5, $fw-2);
+            &:nth-child(5) {
+                color: $color-red-1;
+            }
+        }
+        .btnTrash {
+            color: red;
+            &:hover {
+                cursor: pointer;
+                color: red;
+            }
+        }
+        i {
+            padding: 8px;
+            background-color: #000;
+            color: #fff;
+            &:hover {
+                cursor: pointer;
+                color: green;
+            }
+        }
+    }
+}
+#my_modal.show {
     opacity: 1;
     visibility: visible;
+    .modal_body {
+        right: 0;
+    }
 }
-.overlay {
+
+//modal Over Added
+#overAdded {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+#overAdded.show {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
     position: fixed;
+    align-items: center;
+    justify-content: center;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: #0000009c;
-    z-index: 1;
-}
-.modal_body {
-    height: 100%;
-    z-index: 2;
-    position: absolute;
-    right: 0;
-}
-.modal_title {
-    text-align: center;
+    z-index: 12;
+    .overlayAdded {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background-color: #0000009c;
+        z-index: 1;
+        backdrop-filter: blur(5px);
+    }
+    .overAdded_body {
+        text-align: center;
+        z-index: 1;
+        background-color: #000;
 
-    h2 {
-        margin-top: 5px;
-        @include styleText($color-white-3, $fs-6, $fw-3);
-    }
-}
-.modal_close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 12px 20px;
-    @include styleText($color-white-3, $fs-3, $fw-2);
-
-    &:hover {
-        cursor: pointer;
-        opacity: 0.7;
-    }
-}
-.modal_total {
-    text-align: right;
-    h2 {
-        @include styleText($color-white-3, $fs-7, $fw-2);
-    }
-    button {
-        &:hover {
-            color: #fff;
-            opacity: 0.7;
+        position: absolute;
+        width: 400px;
+        height: auto;
+        h2 {
+            @include styleText($color-blue-3, $fs-3, $fw-2);
+            font-style: italic;
+            padding: 20px;
         }
-        @include styleText($color-white-3, $fs-7, $fw-2);
-        border: 1px solid $color-white-2;
+        button {
+            text-align: center;
+            width: 100%;
+            background-color: $color-red-2;
+            color: #fff;
+
+            &:hover {
+                color: #fff;
+                opacity: 0.7;
+            }
+        }
     }
 }
-table {
-    height: 400px;
-}
+
+//Cart Product
 #store_cart {
     position: absolute;
     right: 0;
@@ -82,11 +190,23 @@ table {
         &:hover {
             cursor: pointer;
             color: #fff;
+            z-index: 1;
         }
         @include styleText($color-dark-2, $fs-8, $fw-3);
         @include distanceTbLr(10px, 10px);
     }
+    .quantityOfCart {
+        position: absolute;
+        right: 0;
+        color: #fff;
+        z-index: 10000;
+        border: 3px solid #fff;
+        padding: 0px 6px;
+        border-radius: 50%;
+        font-weight: 700;
+    }
 }
+
 .store_product {
     background-color: #fff;
 }
@@ -126,6 +246,7 @@ table {
         @include styleText($color-red-1, $fs-2, $fw-2);
     }
     button {
+        display: block;
         background-color: $color-red-2;
         border: none;
         margin-bottom: 2px;
@@ -137,29 +258,99 @@ table {
             opacity: 0.8;
         }
     }
+    .product_quantity {
+        opacity: 0;
+        visibility: hidden;
+        display: none;
+        i {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
 }
-body {
-    overflow: hidden;
-}
-.row {
-    height: 500px;
-    display: flex;
+//icon ARRow when click Add
+.store_product-price.show {
     align-items: center;
+    @include distanceTbLr(0, 10px);
+    span {
+        @include styleText($color-red-1, $fs-2, $fw-2);
+    }
+    button {
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+    }
+    .product_quantity {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
 }
-.store_list-products {
-    height: 1000px;
+//hear icon
+.fa-heart {
+    cursor: pointer;
 }
+.fa-heart.active {
+    color: red;
+}
+
+//Hover Product
+
 .wrap-products {
+    height: 290px;
+    width: 220px;
+    margin: auto 20px;
     transform: scale(1);
-    height: 300px;
     overflow-y: hidden;
     transition: all linear 0.5s;
     transform-origin: top;
-    width: 50px;
+    &:hover {
+        transform: scale(1.08);
+        transform-origin: top;
+        height: 475px;
+    }
 }
-.wrap-products:hover {
-    transform: scale(1.08);
-    transform-origin: top;
-    height: 500px;
-    width: 500px;
+
+.row {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+//media
+$breakpoints: (
+    "extra-large": 1200px,
+    "large": 992px,
+    "medium": 768px,
+    "small": 576px,
+);
+
+@mixin responsive($screen) {
+    @if (map-has-key($map: $breakpoints, $key: $screen)) {
+        //tìm thấy tên màn hình trong danh sách breakpoints
+        $value: map-get(
+            $map: $breakpoints,
+            $key: $screen,
+        );
+        @media screen and (max-width: $value) {
+            @content;
+        }
+    }
+}
+@include responsive("extra-large") {
+    .wrap-products{
+        margin: 25px 30px;
+    }
+    .row {
+        // flex-wrap: nowrap;
+        overflow: scroll;
+    }
+}
+@include responsive("large") {
+}
+@include responsive("medium") {
+   
+}
+@include responsive("small") {
+   
 }

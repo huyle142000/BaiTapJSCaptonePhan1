@@ -11,13 +11,6 @@ class ProductList {
             url: `https://62e77bcf0e5d74566af56fcb.mockapi.io/JSCaption/${id}`,
         });
     };
-    postProduct = (data) => {
-        return axios({
-            method: 'post',
-            url: `https://62e77bcf0e5d74566af56fcb.mockapi.io/JSCaption/${id}`,
-            data: data
-        });
-    };
     checkProduct = (listProduct, id, data) => {
         for (let i = 0; i < listProduct.length; i++) {
             if (listProduct[i].id === id) {

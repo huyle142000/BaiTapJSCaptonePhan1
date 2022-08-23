@@ -142,7 +142,6 @@ function productAddtoCart(id) {
 //Add Product
 function addProduct(id) {
     let valuequantity = `quantityAmount${id}`
-
     let quantity = document.querySelector(`.${valuequantity}`)
     if (quantity.innerHTML < 10) {
         productListAdded.map(function (product) {
@@ -299,7 +298,6 @@ function showCart(listProducts) {
         `;
         document.querySelector('.modal_total').innerHTML = ``
         tableProducts.innerHTML = content;
-        console.log(productListAdded)
         document.querySelector('.removeHome').onclick = function () {
             showCart(productListAdded);
         }
@@ -307,17 +305,17 @@ function showCart(listProducts) {
     //quantityCartIcon
     let quantityOfCart = document.querySelector('.quantityOfCart');
     let numberOfCart = 0;
-    for (let i = 0; i < productListAdded.length; i++) {
-        numberOfCart += productListAdded[i].quantity
+    for (let i = 0; i < listProducts.length; i++) {
+        numberOfCart += listProducts[i].quantity
     }
     quantityOfCart.innerHTML = numberOfCart;
 
 }
 //Found Product
+let productListFound = [];
 function foundProduct() {
     document.getElementById('inputFound').classList.toggle('active');
     let inputFound = document.getElementById('inputFound').value
-    let productListFound = [];
     productListAdded.map(function (product) {
         let productType = product.type;
         if (isNaN(productType)) {

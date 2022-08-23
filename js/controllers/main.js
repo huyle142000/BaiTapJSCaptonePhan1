@@ -1,20 +1,20 @@
 // Xử lý modal
-var mymodal = document.getElementById('my_modal');
-var modal_body = document.querySelector('.modal_body');
+let mymodal = document.getElementById('my_modal');
+let modal_body = document.querySelector('.modal_body');
 
 //Show modal
-var storeCart = document.getElementById('store_cart');
+let storeCart = document.getElementById('store_cart');
 storeCart.addEventListener('click', function (e) {
     mymodal.classList.add('show');
 
 })
 
 // closeModal
-var closeModal = document.querySelector('.modal_close');
+let closeModal = document.querySelector('.modal_close');
 closeModal.addEventListener('click', function (e) {
     mymodal.classList.remove('show')
 })
-var overlay = document.querySelector('.overlay');
+let overlay = document.querySelector('.overlay');
 
 overlay.addEventListener('click', function (e) {
     closeModal.click();
@@ -22,18 +22,18 @@ overlay.addEventListener('click', function (e) {
 
 
 //Product List
-var productListAdded = [];
+let productListAdded = [];
 
 //ProductAXIOS
-var productList = new ProductList();
+let productList = new ProductList();
 
 function getProductList() {
     productList.getProduct().then(function (result) {
         showWeb(result.data);
         //BTN add
-        var storeProduct = document.querySelectorAll('.store_product-price');
+        let storeProduct = document.querySelectorAll('.store_product-price');
 
-        for (var i = 0; i < storeProduct.length; i++) {
+        for (let i = 0; i < storeProduct.length; i++) {
             const c = storeProduct[i];
             //QUANTITY SPAN
             const quantityAmount = c.querySelector('.quantityAmount');
@@ -48,7 +48,6 @@ function getProductList() {
             });
         }
 
-        getLocalstorages()
 
     }).catch(function (err) {
     });
@@ -59,8 +58,8 @@ getProductList()
 
 //SHOW TO WEB
 function showWeb(data) {
-    var content = '';
-    var stt = 1;
+    let content = '';
+    let stt = 1;
     data.map(function (item) {
         content +=
             `
@@ -101,7 +100,7 @@ function showWeb(data) {
                 `
     });
     document.getElementById('store_list-products').innerHTML = content;
-    var heart = document.querySelectorAll('.fa-heart');
+    let heart = document.querySelectorAll('.fa-heart');
     for (let i = 0; i < heart.length; i++) {
         heart[i].addEventListener('click', () => {
             heart[i].classList.toggle('active');
@@ -142,18 +141,18 @@ function productAddtoCart(id) {
 
 //Add Product
 function addProduct(id) {
-    var valuequantity = `quantityAmount${id}`
+    let valuequantity = `quantityAmount${id}`
 
-    var quantity = document.querySelector(`.${valuequantity}`)
+    let quantity = document.querySelector(`.${valuequantity}`)
     if (quantity.innerHTML < 10) {
         productListAdded.map(function (product) {
             if (product.id == id) {
-                var plusQuantity = ++product.quantity;
+                let plusQuantity = ++product.quantity;
                 product.quantity = plusQuantity;
 
                 //TotalAfteradd
-                var numberPrice = String(product.price).split("$");
-                var totals = Number(numberPrice[1]) * Number(plusQuantity);
+                let numberPrice = String(product.price).split("$");
+                let totals = Number(numberPrice[1]) * Number(plusQuantity);
                 product.total = totals;
 
                 //quantity inner
@@ -162,8 +161,8 @@ function addProduct(id) {
         })
 
     } else {
-        var overAdded = document.getElementById('overAdded');
-        var overAddedBody = document.querySelector('.overAdded_body');
+        let overAdded = document.getElementById('overAdded');
+        let overAddedBody = document.querySelector('.overAdded_body');
         overAddedBody.innerHTML = `
         <h2 class="overAdded_title">You Can Only Buy 10 Items For Each Product</h2>
             <button class="btn btnOverAdded">OKAY</button>
@@ -171,7 +170,7 @@ function addProduct(id) {
 
         overAdded.classList.toggle('show')
 
-        var btnOverAdded = document.querySelector('.btnOverAdded');
+        let btnOverAdded = document.querySelector('.btnOverAdded');
         btnOverAdded.onclick = function () {
             storeCart.click()
             overAdded.classList.remove('show')
@@ -187,21 +186,21 @@ function addProduct(id) {
 
 //Remove product
 function removeProduct(id) {
-    var valuequantity = `quantityAmount${id}`
-    var quantity = document.querySelector(`.${valuequantity}`)
+    let valuequantity = `quantityAmount${id}`
+    let quantity = document.querySelector(`.${valuequantity}`)
     console.log(quantity)
 
     if (Number(quantity.innerHTML) <= 10 && Number(quantity.innerHTML) > 1) {
         productListAdded.map(function (product) {
             if (product.id == id) {
-                var minusQuantity = --product.quantity;
+                let minusQuantity = --product.quantity;
                 product.quantity = minusQuantity;
 
                 //quantity innerHTML
                 quantity.innerHTML = minusQuantity;
                 //TotalAfterRemove
-                var numberPrice = String(product.price).split("$");
-                var totals = Number(numberPrice[1]) * Number(minusQuantity);
+                let numberPrice = String(product.price).split("$");
+                let totals = Number(numberPrice[1]) * Number(minusQuantity);
                 product.total = totals;
 
             }
@@ -210,7 +209,7 @@ function removeProduct(id) {
     } else {
         productListAdded.map(function (product) {
             if (product.id == id) {
-                var minusQuantity = --product.quantity;
+                let minusQuantity = --product.quantity;
                 product.quantity = minusQuantity;
                 deleteProduct(id);
                 quantity.parentElement.parentElement.classList.remove('show');
@@ -223,7 +222,7 @@ function removeProduct(id) {
 }
 //DELETE PRODUCT
 function deleteProduct(id) {
-    var quantity = document.querySelector(`.quantityAmount${id}`);
+    let quantity = document.querySelector(`.quantityAmount${id}`);
     console.log(quantity)
     productListAdded.map(function (product, index) {
         if (product.id === id) {
@@ -241,14 +240,14 @@ function deleteProduct(id) {
 
 }
 //Show to CART
-function showCart(productListAdded) {
-    var tableProducts = document.querySelector('.table_products');
-    var content = "";
-    var divFilters = "";
-    if (productListAdded.length > 0) {
+function showCart(listProducts) {
+    let tableProducts = document.querySelector('.table_products');
+    let content = "";
+    let divFilters = "";
+    if (listProducts.length > 0) {
         content = "";
-        var totalSpan = 0;
-        productListAdded.map(function (product) {
+        let totalSpan = 0;
+        listProducts.map(function (product) {
             let { img, name, id, quantity, price, total } = product;
             totalSpan += total;
             content += `
@@ -272,7 +271,7 @@ function showCart(productListAdded) {
         divFilters = `
         <tr>
         <td colspan="5">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between wrap-foundProduct">
         <input class="form-control" id="inputFound"style="display: inline-block;" type="text" placeholder="Found product">
         <i class="fa-solid fa-magnifying-glass" onclick="foundProduct()"></i>
         </div>
@@ -282,62 +281,71 @@ function showCart(productListAdded) {
         document.querySelector('.modal_total').innerHTML = ` 
         <h2 class="totalH2">
             Total:<span style="color:green">$${totalSpan}</span>
-        </h2>
-        <button class="btn" id="purchaseProduct" onclick="purchaseProduct()">Purchase</button>
-        <button class="btn" id="resetProduct" onclick="resetCart()">Reset</button>
-        `
+            </h2>
+            <button class="btn" id="purchaseProduct" onclick="purchaseProduct()">Purchase</button>
+            <button class="btn" id="resetProduct" onclick="resetCart()">Reset</button>
+            `
 
+        tableProducts.innerHTML = divFilters + content;
     } else {
         content = `
+        <div id="backHome">
+            <i class="fa-solid fa-arrow-left removeHome"></i>
+            <p>Back</p>
+        </div>
         <tr>
             <td style = "font-size:50px ;" > No Product Added</td>
         </tr >
         `;
         document.querySelector('.modal_total').innerHTML = ``
-
+        tableProducts.innerHTML = content;
+        console.log(productListAdded)
+        document.querySelector('.removeHome').onclick = function () {
+            showCart(productListAdded);
+        }
     }
     //quantityCartIcon
-    var quantityOfCart = document.querySelector('.quantityOfCart');
-    var numberOfCart = 0;
-    for (var i = 0; i < productListAdded.length; i++) {
+    let quantityOfCart = document.querySelector('.quantityOfCart');
+    let numberOfCart = 0;
+    for (let i = 0; i < productListAdded.length; i++) {
         numberOfCart += productListAdded[i].quantity
     }
     quantityOfCart.innerHTML = numberOfCart;
-    setLocalstorages();
 
-    return tableProducts.innerHTML = divFilters + content;
 }
 //Found Product
 function foundProduct() {
     document.getElementById('inputFound').classList.toggle('active');
-    var inputFound = document.getElementById('inputFound').value
-    var productListFound = [];
+    let inputFound = document.getElementById('inputFound').value
+    let productListFound = [];
     productListAdded.map(function (product) {
-        var productType = product.type;
-        console.log(productType)
+        let productType = product.type;
         if (isNaN(productType)) {
-            var toLowerCaseProduct = productType.toLowerCase();
+            let toLowerCaseProduct = productType.toLowerCase();
             if (toLowerCaseProduct) {
-
                 if (toLowerCaseProduct.indexOf(inputFound.toLowerCase()) >= 0) {
                     return productListFound.push(product);
                 }
-
             }
         }
 
     })
     showCart(productListFound)
+    console.log(productListAdded)
+
+
+
 }
+
 //RESET CART
 function resetCart() {
-    var quantityAmount = document.querySelectorAll(`.quantitySpan`);
+    let quantityAmount = document.querySelectorAll(`.quantitySpan`);
     Array.from(quantityAmount).map(function (item) {
         item.innerHTML = 1;
     })
     productListAdded = [];
-    var storeProduct = document.querySelectorAll('.store_product-price');
-    for (var i = 0; i < storeProduct.length; i++) {
+    let storeProduct = document.querySelectorAll('.store_product-price');
+    for (let i = 0; i < storeProduct.length; i++) {
         const c = storeProduct[i];
         c.classList.remove('show');
     }
@@ -350,10 +358,10 @@ function resetCart() {
 
 //Purchase product
 function purchaseProduct() {
-    var overAdded = document.getElementById('overAdded');
-    var overAddedBody = document.querySelector('.overAdded_body');
-    var content = '';
-    var total = 0;
+    let overAdded = document.getElementById('overAdded');
+    let overAddedBody = document.querySelector('.overAdded_body');
+    let content = '';
+    let total = 0;
     productListAdded.map(function (product) {
         total += product.total;
         content += `
@@ -363,13 +371,13 @@ function purchaseProduct() {
         </div>
         `
     });
-    var paymentDiv = `
+    let paymentDiv = `
     <div>
         <h2 style="color:#fff;font-size:"30px">Payment</h2>
         <div>
    <div>
     `
-    var btnPayment = `
+    let btnPayment = `
     <div style="border-top:2px solid #fff;font-size: 15px;color: #fff;font-weight: 700;margin:20px 0">
         <span style="margin-top: 10px;display: block;">Total amount to be paid:</span>
         <span style="color:green">$${total}</span>
@@ -389,14 +397,11 @@ function purchaseProduct() {
 function cancelBTN() {
     document.querySelector('#overAdded').classList.remove('show');
 }
-// đã trừ vào kho 
-//chạy vòng aray giỏ hàng, nếu sp =0 thì sản phẩm đó không thể click add đc nữa
-//khi order=> clear table và shkho trừ sohang mua con bao nhieu day lại vào sp đó 
-//Khi order buộc ktra  hàng mua  có lớn hơn số hàng tồn ? không order đc tắt popup hiện totalQuantity của sp không mua được
+
 //order btn
 function orderBtn(totalPay) {
     resetCart()
-    var overAddedBody = document.querySelector('.overAdded_body');
+    let overAddedBody = document.querySelector('.overAdded_body');
     return overAddedBody.innerHTML = `
     <div style="color:#fff;font-weight:bold;font-size:18px">
         <div style="border-bottom: 1px dashed #fff;">
@@ -416,7 +421,7 @@ function orderBtn(totalPay) {
     `
 }
 function okayToCountinueBtn() {
-    var overAddedBody = document.querySelector('.overAdded_body');
+    let overAddedBody = document.querySelector('.overAdded_body');
     showCart(productListAdded);
     return overAddedBody.innerHTML = `
     <div style="color:#fff;font-style:italic;font-size:20px;font-weight:600">
@@ -443,6 +448,5 @@ function getLocalstorages() {
     showCart(productListAdded)
 }
 
-//Change Heart
 
 

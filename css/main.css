@@ -13,14 +13,36 @@ html, body {
 
 #store {
   background: linear-gradient(rgb(241, 50, 55), rgb(199, 128, 140));
-  height: 100vh;
   width: 100vw;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
   position: relative;
-  overflow: hidden;
+}
+
+.store_product-img {
+  text-align: center;
+  position: relative;
+  transition: all 0.5s linear;
+}
+.store_product-img .store_product-imgItem {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.5s linear;
+}
+.store_product-img:hover #changeColor {
+  opacity: 1;
+}
+.store_product-img:hover .store_product-imgItem {
+  opacity: 0;
+}
+.store_product-img #changeColor {
+  transition: all 0.5s linear;
+  top: 0;
+  left: 0;
+  opacity: 0;
 }
 
 #my_modal {
@@ -52,7 +74,8 @@ html, body {
   height: 100%;
   z-index: 2;
   position: absolute;
-  width: 50vw;
+  width: 60vw;
+  overflow-y: scroll;
 }
 #my_modal .modal_title {
   text-align: center;
@@ -322,18 +345,12 @@ html, body {
 }
 
 .wrap-products {
-  height: 290px;
   width: 220px;
-  margin: auto 20px;
+  margin: 10px;
   transform: scale(1);
-  overflow-y: hidden;
   transition: all linear 0.5s;
   transform-origin: top;
-}
-.wrap-products:hover {
-  transform: scale(1.08);
-  transform-origin: top;
-  height: 475px;
+  background-color: #fff;
 }
 
 .row {
@@ -342,11 +359,13 @@ html, body {
   justify-content: center;
 }
 
-@media screen and (max-width: 1200px) {
-  .wrap-products {
-    margin: 25px 30px;
+@media screen and (min-width: 1200px) {
+  #store_list-products {
+    padding: 0 90px;
   }
-  .row {
-    overflow: scroll;
+}
+@media screen and (min-width: 306px) {
+  #store_list-products {
+    padding: 0 90px;
   }
 }/*# sourceMappingURL=main.css.map */

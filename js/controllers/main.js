@@ -62,40 +62,42 @@ function showWeb(data) {
     var content = '';
     var stt = 1;
     data.map(function (item) {
-        content += `
-        <div class="card wrap-products">
+        content +=
+            `
+        <div class="wrap-products col-12 col-sm-4 col-lg-3">
         <div class="store_product-icon d-flex  justify-content-between">
-        <i class="${item.iconLogo}"></i>
-        <span>In Stock</span>
+            <i class="${item.iconLogo}"></i>
+            <span>In Stock</span>
         </div>
         <div class="store_product-img">
-        <img src="${item.img}" class="img-fluid" alt="placeholder" />
+            <img src="${item.imgChangeColor}" id="changeColor" class="img-fluid" alt="placeholder"/>
+            <img src="${item.img}" class="img-fluid store_product-imgItem" alt="placeholder"/>
         </div>
         <div class="store_product-content">
-        <div class="store_product-title d-flex  justify-content-between align-items-center mt-4">
-        <span>${item.name}<br> ${item.desc}</span>
-        <i class="fa-solid fa-heart"></i>
-        </div>
-        <div class="store_product-features">
-        <h2>Features:</h2>
-        <h2>- FrontCamera: ${item.frontCamera}</h2>
-        <h2>- BackCamera: ${item.backCamera}</h2>
-                </div>
-                <div class="store_product-price d-flex  justify-content-between align-items-center">
-                
+            <div class="store_product-title d-flex  justify-content-between align-items-center mt-4">
+                <span>${item.name}<br> ${item.desc}</span>
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <div class="store_product-features">
+                <h2>Features:</h2>
+                <h2>- FrontCamera: ${item.frontCamera}</h2>
+                <h2>- BackCamera: ${item.backCamera}</h2>
+            </div>
+            <div class="store_product-price d-flex  justify-content-between align-items-center">
+
                 <span>${item.price}</span>
-                
+
                 <button type="button" class="btn btnAdd"">Add</button>
                 
-                <div class="product_quantity">
-                <i class="fa-solid fa-circle-arrow-left btnDown" onclick="removeProduct('${item.id}')"></i>
-                <span class="quantityAmount${item.id} quantitySpan" >1</span>
-                <i class="fa-solid fa-circle-arrow-right btnUp"  onclick="addProduct('${item.id}')"></i>
-                </div>
-                
-                </div>
-                </div>
-                </div>
+                <div class=" product_quantity">
+                    <i class="fa-solid fa-circle-arrow-left btnDown" onclick="removeProduct('${item.id}')"></i>
+                    <span class="quantityAmount${item.id} quantitySpan">1</span>
+                    <i class="fa-solid fa-circle-arrow-right btnUp" onclick="addProduct('${item.id}')"></i>
+            </div>
+
+        </div>
+    </div>
+    </div>
                 `
     });
     document.getElementById('store_list-products').innerHTML = content;
@@ -109,25 +111,30 @@ function showWeb(data) {
 //add To Cart
 function productAddtoCart(id) {
     productList.getProductToAdd(id).then(function (result) {
-        var quantitys = 1;
-        var productAddss = new Product(result.data.img, result.data.name, quantitys, result.data.price, result.data.id, result.data.type);
-        productListAdded.push(productAddss);
-
-        //valueQuantity
-        var valuequantity = `quantityAmount${id}`;
-        var quantity = document.querySelector(`.${valuequantity}`);
-        quantity.innerHTML = quantitys;
-
+        let product = productListAdded.find((x) => x.id === id)
+        if (product === undefined) {
+            let quantity = 1;
+            let { img, name, price, id, type, totalQuantity, backCamera, frontCamera, desc, iconLogo } = result.data;
+            let productAddss = new Product(img, name, quantity, price, id, type, totalQuantity, backCamera, frontCamera, desc, iconLogo);
+            productListAdded.push(productAddss)
+            let valuequantity = `quantityAmount${id}`;
+            let quantitySpan = document.querySelector(`.${valuequantity}`);
+            quantitySpan.innerHTML = quantity;
+        } else {
+            product.quantity += 1;
+        }
+        console.log(productListAdded)
         //quantityCartIcon
-        var quantityOfCart = document.querySelector('.quantityOfCart');
-        var numberOfCart = 0;
-        for (var i = 0; i < productListAdded.length; i++) {
+        let quantityOfCart = document.querySelector('.quantityOfCart');
+        let numberOfCart = 0;
+        for (let i = 0; i < productListAdded.length; i++) {
             numberOfCart += productListAdded[i].quantity
         }
         quantityOfCart.innerHTML = numberOfCart;
 
         //showCart        
         showCart(productListAdded);
+
     }
     )
 
@@ -240,20 +247,21 @@ function showCart(productListAdded) {
     var divFilters = "";
     if (productListAdded.length > 0) {
         content = "";
-        var total = 0;
+        var totalSpan = 0;
         productListAdded.map(function (product) {
-            total += product.total;
+            let { img, name, id, quantity, price, total } = product;
+            totalSpan += total;
             content += `
         <tr>
-            <td><img src="${product.imgProduct}" class="img-fluid"></td>
-            <td>${product.name}</td>
+            <td><img src="${img}" class="img-fluid"></td>
+            <td>${name}</td>
             <td>
-                <i class="fa-solid fa-circle-arrow-left" class ="btnDown" onclick="removeProduct('${product.id}')"></i>
-                 ${product.quantity}
-                <i class="fa-solid fa-circle-arrow-right" class ="btnUp" onclick="addProduct('${product.id}')"></i>
+                <i class="fa-solid fa-circle-arrow-left" class ="btnDown" onclick="removeProduct('${id}')"></i>
+                 ${quantity}
+                <i class="fa-solid fa-circle-arrow-right" class ="btnUp" onclick="addProduct('${id}')"></i>
             </td>
             <td>
-                ${product.price}
+                ${price}
             </td>
             <td>
                 <i class="fa-solid fa-trash btnTrash"onclick="deleteProduct('${product.id}')" style="padding:8px"></i>
@@ -263,7 +271,7 @@ function showCart(productListAdded) {
         })
         divFilters = `
         <tr>
-        <td colspan="5  ">
+        <td colspan="5">
         <div class="d-flex justify-content-between">
         <input class="form-control" id="inputFound"style="display: inline-block;" type="text" placeholder="Found product">
         <i class="fa-solid fa-magnifying-glass" onclick="foundProduct()"></i>
@@ -273,7 +281,7 @@ function showCart(productListAdded) {
         `
         document.querySelector('.modal_total').innerHTML = ` 
         <h2 class="totalH2">
-            Total:<span style="color:green">$${total}</span>
+            Total:<span style="color:green">$${totalSpan}</span>
         </h2>
         <button class="btn" id="purchaseProduct" onclick="purchaseProduct()">Purchase</button>
         <button class="btn" id="resetProduct" onclick="resetCart()">Reset</button>
@@ -324,11 +332,9 @@ function foundProduct() {
 //RESET CART
 function resetCart() {
     var quantityAmount = document.querySelectorAll(`.quantitySpan`);
-    console.log(quantityAmount)
     Array.from(quantityAmount).map(function (item) {
         item.innerHTML = 1;
     })
-
     productListAdded = [];
     var storeProduct = document.querySelectorAll('.store_product-price');
     for (var i = 0; i < storeProduct.length; i++) {
@@ -349,7 +355,7 @@ function purchaseProduct() {
     var content = '';
     var total = 0;
     productListAdded.map(function (product) {
-        total += product.total
+        total += product.total;
         content += `
         <div class="d-flex justify-content-between font-weight-bold">
         <span style="color:#fff;font-size:"24px">${product.name} X ${product.quantity}</span>
@@ -383,9 +389,13 @@ function purchaseProduct() {
 function cancelBTN() {
     document.querySelector('#overAdded').classList.remove('show');
 }
-
+// đã trừ vào kho 
+//chạy vòng aray giỏ hàng, nếu sp =0 thì sản phẩm đó không thể click add đc nữa
+//khi order=> clear table và shkho trừ sohang mua con bao nhieu day lại vào sp đó 
+//Khi order buộc ktra  hàng mua  có lớn hơn số hàng tồn ? không order đc tắt popup hiện totalQuantity của sp không mua được
 //order btn
 function orderBtn(totalPay) {
+    resetCart()
     var overAddedBody = document.querySelector('.overAdded_body');
     return overAddedBody.innerHTML = `
     <div style="color:#fff;font-weight:bold;font-size:18px">
@@ -408,7 +418,6 @@ function orderBtn(totalPay) {
 function okayToCountinueBtn() {
     var overAddedBody = document.querySelector('.overAdded_body');
     showCart(productListAdded);
-    resetCart()
     return overAddedBody.innerHTML = `
     <div style="color:#fff;font-style:italic;font-size:20px;font-weight:600">
     Thanks for shopping with us
@@ -424,12 +433,12 @@ function continueBTN() {
 // LOcalStorage
 function setLocalstorages() {
     localStorage.setItem('ProductCart', JSON.stringify(productListAdded));
-    console.log(productListAdded)
+    // console.log(productListAdded)
 }
 function getLocalstorages() {
     if (localStorage.getItem("ProductCart") != undefined) {
         productListAdded = JSON.parse(localStorage.getItem('ProductCart'));
-        console.log(productListAdded)
+        // console.log(productListAdded)
     }
     showCart(productListAdded)
 }

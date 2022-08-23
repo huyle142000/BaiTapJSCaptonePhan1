@@ -1,13 +1,35 @@
 #store {
     background: linear-gradient(rgb(241, 50, 55), rgb(199, 128, 140));
-    height: 100vh;
     width: 100vw;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
     align-items: center;
     position: relative;
-    overflow: hidden;
+}
+.store_product-img {
+    text-align: center;
+    position: relative;
+    .store_product-imgItem {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: all 0.5s linear;
+    }
+    &:hover #changeColor {
+        opacity: 1;
+    }
+    &:hover .store_product-imgItem {
+        opacity: 0;
+    }
+    transition: all 0.5s linear;
+
+    #changeColor {
+        transition: all 0.5s linear;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
 }
 
 //MODAL
@@ -40,7 +62,8 @@
         height: 100%;
         z-index: 2;
         position: absolute;
-        width: 50vw;
+        width: 60vw;
+        overflow-y: scroll;
     }
     .modal_title {
         text-align: center;
@@ -298,18 +321,13 @@
 //Hover Product
 
 .wrap-products {
-    height: 290px;
     width: 220px;
-    margin: auto 20px;
+    margin: 10px;
     transform: scale(1);
-    overflow-y: hidden;
     transition: all linear 0.5s;
     transform-origin: top;
-    &:hover {
-        transform: scale(1.08);
-        transform-origin: top;
-        height: 475px;
-    }
+    background-color: #fff;
+
 }
 
 .row {
@@ -317,12 +335,13 @@
     height: 100%;
     justify-content: center;
 }
+
 //media
 $breakpoints: (
     "extra-large": 1200px,
     "large": 992px,
     "medium": 768px,
-    "small": 576px,
+    "small": 306px,
 );
 
 @mixin responsive($screen) {
@@ -332,25 +351,19 @@ $breakpoints: (
             $map: $breakpoints,
             $key: $screen,
         );
-        @media screen and (max-width: $value) {
+        @media screen and (min-width: $value) {
             @content;
         }
     }
 }
-@include responsive("extra-large") {
-    .wrap-products{
-        margin: 25px 30px;
-    }
-    .row {
-        // flex-wrap: nowrap;
-        overflow: scroll;
+@include responsive('extra-large'){
+    #store_list-products{
+        padding: 0 90px;
     }
 }
-@include responsive("large") {
+@include responsive('small'){
+    #store_list-products{
+        padding: 0 90px;
+    }
 }
-@include responsive("medium") {
-   
-}
-@include responsive("small") {
-   
-}
+

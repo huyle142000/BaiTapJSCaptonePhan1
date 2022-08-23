@@ -1,16 +1,21 @@
-function Product(img, name, quantity, price, id,type) {
-    this.imgProduct = img;
+function Product(img, name, quantity, price, id, type, totalQuantity,backCamera,frontCamera,desc,iconLogo) {
+    this.img = img;
     this.name = name;
     this.quantity = quantity;
     this.price = price;
     this.id = id;
     this.type = type;
+    this.backCamera = backCamera;
+    this.frontCamera = frontCamera;
+    this.desc = desc;
+    this.iconLogo = iconLogo
+    this.totalQuantity = totalQuantity;
     this.totalPrice = function () {
-        var numberPrice =String(this.price).split("$");
+        var numberPrice = String(this.price).split("$");
         var totalPrice = Number(numberPrice[1]) * Number(this.quantity);
         return totalPrice
     }
-    this.total=this.totalPrice()
+    this.total = this.totalPrice()
 }
 
 // var asd = new Product(1,2,7,'$750',1)

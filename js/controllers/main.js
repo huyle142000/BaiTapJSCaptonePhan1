@@ -48,7 +48,7 @@ function getProductList() {
             });
         }
 
-
+        getLocalstorages()
     }).catch(function (err) {
     });
 }
@@ -142,6 +142,7 @@ function productAddtoCart(id) {
 //Add Product
 function addProduct(id) {
     let valuequantity = `quantityAmount${id}`
+
     let quantity = document.querySelector(`.${valuequantity}`)
     if (quantity.innerHTML < 10) {
         productListAdded.map(function (product) {
@@ -298,6 +299,7 @@ function showCart(listProducts) {
         `;
         document.querySelector('.modal_total').innerHTML = ``
         tableProducts.innerHTML = content;
+        console.log(productListAdded)
         document.querySelector('.removeHome').onclick = function () {
             showCart(productListAdded);
         }
@@ -305,17 +307,17 @@ function showCart(listProducts) {
     //quantityCartIcon
     let quantityOfCart = document.querySelector('.quantityOfCart');
     let numberOfCart = 0;
-    for (let i = 0; i < listProducts.length; i++) {
-        numberOfCart += listProducts[i].quantity
+    for (let i = 0; i < productListAdded.length; i++) {
+        numberOfCart += productListAdded[i].quantity
     }
     quantityOfCart.innerHTML = numberOfCart;
-
+    setLocalstorages()
 }
 //Found Product
-let productListFound = [];
 function foundProduct() {
     document.getElementById('inputFound').classList.toggle('active');
     let inputFound = document.getElementById('inputFound').value
+    let productListFound = [];
     productListAdded.map(function (product) {
         let productType = product.type;
         if (isNaN(productType)) {
@@ -351,3 +353,100 @@ function resetCart() {
     return showCart(productListAdded);
 
 }
+
+
+
+//Purchase product
+function purchaseProduct() {
+    let overAdded = document.getElementById('overAdded');
+    let overAddedBody = document.querySelector('.overAdded_body');
+    let content = '';
+    let total = 0;
+    productListAdded.map(function (product) {
+        total += product.total;
+        content += `
+        <div class="d-flex justify-content-between font-weight-bold">
+        <span style="color:#fff;font-size:"24px">${product.name} X ${product.quantity}</span>
+        <span style="color:green">$${product.total}</span>
+        </div>
+        `
+    });
+    let paymentDiv = `
+    <div>
+        <h2 style="color:#fff;font-size:"30px">Payment</h2>
+        <div>
+   <div>
+    `
+    let btnPayment = `
+    <div style="border-top:2px solid #fff;font-size: 15px;color: #fff;font-weight: 700;margin:20px 0">
+        <span style="margin-top: 10px;display: block;">Total amount to be paid:</span>
+        <span style="color:green">$${total}</span>
+    </div>
+    <div class="d-flex justify-content-between" style="margin-top:auto;font-size: 18 px;font-weight: 700;">
+        <button type="btn" class="btn font-weight-bold" style="width:48%;color:#fff;background-color:green;padding: 10px 15px"onclick="orderBtn(${total})">Order Now</button>
+        <button type="btn" class="btn font-weight-bold" style="width:48%;color:#fff;background-color:red;padding: 10px 15px" onclick="cancelBTN()">Cancel</button>
+    </div>
+
+`
+    overAdded.classList.toggle('show');
+
+    overAddedBody.innerHTML = paymentDiv + content + btnPayment;
+
+}
+//Cancel button
+function cancelBTN() {
+    document.querySelector('#overAdded').classList.remove('show');
+}
+
+//order btn
+function orderBtn(totalPay) {
+    resetCart()
+    let overAddedBody = document.querySelector('.overAdded_body');
+    return overAddedBody.innerHTML = `
+    <div style="color:#fff;font-weight:bold;font-size:18px">
+        <div style="border-bottom: 1px dashed #fff;">
+            Your order has been placed
+        </div>
+        <div style="border-bottom: 1px dashed #fff;">
+            Your order-id is :<span> 616 <span>
+        </div>
+        <div style="border-bottom: 1px dashed #fff;">
+            Your order will be delivered to you in 3-5 working days
+        </div>
+        <div>
+            You can pay <span style="font-weight:bold; color: green">$ ${totalPay}</span> by card or any online transaction method after the products have been dilivered to you
+        </div>
+    </div>  
+    <button class = "btn"style="padding:10px 30px;background:green;color:#fff; font-weight:bold" onclick="okayToCountinueBtn()">Okay</button>
+    `
+}
+function okayToCountinueBtn() {
+    let overAddedBody = document.querySelector('.overAdded_body');
+    showCart(productListAdded);
+    return overAddedBody.innerHTML = `
+    <div style="color:#fff;font-style:italic;font-size:20px;font-weight:600">
+    Thanks for shopping with us
+    </div>
+    <button style="padding:10px 30px;background:green;color:#fff" onclick="continueBTN()">Continue</button>
+    `
+}
+function continueBTN() {
+    document.querySelector('#overAdded').classList.remove('show');
+}
+
+
+// LOcalStorage
+function setLocalstorages() {
+    localStorage.setItem('ProductCart', JSON.stringify(productListAdded));
+    console.log(productListAdded)
+}
+function getLocalstorages() {
+    if (localStorage.getItem("ProductCart") != undefined) {
+        productListAdded = JSON.parse(localStorage.getItem('ProductCart'));
+        console.log(productListAdded)
+    }
+    showCart(productListAdded)
+}
+
+
+

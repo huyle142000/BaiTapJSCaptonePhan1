@@ -48,7 +48,7 @@ function getProductList() {
             });
         }
 
-
+        getLocalstorages()
     }).catch(function (err) {
     });
 }
@@ -311,6 +311,7 @@ function showCart(listProducts) {
         numberOfCart += productListAdded[i].quantity
     }
     quantityOfCart.innerHTML = numberOfCart;
+    setLocalstorages()
 
 }
 //Found Product

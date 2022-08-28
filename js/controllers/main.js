@@ -122,7 +122,6 @@ function productAddtoCart(id) {
         } else {
             product.quantity += 1;
         }
-        console.log(productListAdded)
         //quantityCartIcon
         let quantityOfCart = document.querySelector('.quantityOfCart');
         let numberOfCart = 0;
@@ -188,7 +187,6 @@ function addProduct(id) {
 function removeProduct(id) {
     let valuequantity = `quantityAmount${id}`
     let quantity = document.querySelector(`.${valuequantity}`)
-    console.log(quantity)
 
     if (Number(quantity.innerHTML) <= 10 && Number(quantity.innerHTML) > 1) {
         productListAdded.map(function (product) {
@@ -223,7 +221,6 @@ function removeProduct(id) {
 //DELETE PRODUCT
 function deleteProduct(id) {
     let quantity = document.querySelector(`.quantityAmount${id}`);
-    console.log(quantity)
     productListAdded.map(function (product, index) {
         if (product.id === id) {
             productListAdded.splice(index, 1)
@@ -299,7 +296,6 @@ function showCart(listProducts) {
         `;
         document.querySelector('.modal_total').innerHTML = ``
         tableProducts.innerHTML = content;
-        console.log(productListAdded)
         document.querySelector('.removeHome').onclick = function () {
             showCart(productListAdded);
         }
@@ -331,7 +327,6 @@ function foundProduct() {
 
     })
     showCart(productListFound)
-    console.log(productListAdded)
 
 
 

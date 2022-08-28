@@ -18,5 +18,4 @@ function Product(img, name, quantity, price, id, type, totalQuantity,backCamera,
     this.total = this.totalPrice()
 }
 
-// var asd = new Product(1,2,7,'$750',1)
-// console.log(asd)
+
